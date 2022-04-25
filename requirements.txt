@@ -1,0 +1,6 @@
+xmlschema
+pandas
+pprint
+openpyxl
+xlrd
+lxml

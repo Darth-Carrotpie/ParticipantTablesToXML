@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="ParticipantFormObject" type="participantsFormObject"/> <!-- DUOMENYS APIE PROJEKTO DALYVIUS -->
+
+  <xs:complexType name="participantsFormObject">
+    <xs:complexContent>
+      <xs:extension base="abstractParticFormObject">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="abstractParticFormObject">
+    <xs:sequence>
+      <xs:element name="projectCode" type="xs:string"/> <!-- Projekto kodas. Privalomas -->
+      <xs:element name="formDate" type="xs:date"/> <!-- Dalyvių anketinių duomenų pildymo data. Privaloma -->
+      <xs:element name="ParticipantList"><!--DALYVIŲ SĄRAŠAS. Privalomas -->
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Participant" type="participant" maxOccurs="unbounded"/><!-- Dalyvis. Privalomas -->
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="participant"> <!-- Dalyvio duomenys -->
+        <xs:sequence>
+          <xs:element name="dateFilled" type="xs:date"/> <!-- Dalyvio anketos pildymo data. Privaloma -->
+          <xs:element name="surname"> <!-- Dalyvio pavardė max 30 simbolių. Privaloma -->
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:maxLength value="30"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="forename"> <!-- Dalyvio vardas max 30 simbolių. Privalomas -->
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:maxLength value="30"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="dateOfBirth" type="xs:date"/> <!-- Dalyvio gimimo data. Privaloma -->
+          <xs:element name="email" minOccurs="0"> <!-- Dalyvio el. pašto adresas max 100 simbolių. Neprivalomas -->
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:maxLength value="100"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="phoneNo" minOccurs="0"> <!-- Dalyvio telefono numeris max 30 simbolių. Neprivalomas -->
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:maxLength value="30"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="employerName" minOccurs="0"> <!-- Darbovietės pavadinimas max 140 simbolių. Privalomas, jei nurodyta, kad privaloma prie kvietimo arba patvirtinto sąrašo -->
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:maxLength value="140"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="employerCode" minOccurs="0"> <!-- Darbovietės juridinio asmens kodas max 15 simbolių. Privalomas, jei nurodyta, kad privaloma prie kvietimo arba patvirtinto sąrašo -->
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:maxLength value="15"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="ParticipantMarkList" minOccurs="0"> <!-- Kiti dalyvio požymiai. Požymių sąrašas. Neprivalomas -->
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ParticipantMark" type="participantMark" maxOccurs="unbounded"/><!-- Kitas dalyvio požymis. Privalomas -->
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ParticipantCriterionList" minOccurs="0"> <!-- Informacija apie atitiktį papildomiems kriterijams. Kriterijų sąrašas. Neprivalomas -->
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ParticipantCriterion" type="participantCriterion" maxOccurs="unbounded"/><!-- Papildomas kriterijus. Privalomas -->
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="gender" type="participantGender"/><!-- Dalyvio lytis. Privaloma -->
+          <xs:element name="education" type="particEducation"/><!-- Turimas išsilavinimas. Privalomas -->
+          <xs:element name="occupation" type="particOccupation"/><!-- Statusas darbo rinkoje. Privalomas -->
+          <xs:element name="educProgram" type="particEducProgram"/><!-- Dalyvavimas švietimo programose.Privalomas -->
+          <xs:element name="VulnGroupList"><!-- Projekto dalyvio priklausymas socialiai pažeidžiamoms grupėms. Grupių sąrašas. Privalomas -->
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="VulnGroup" type="particVulnGroup" maxOccurs="unbounded"/><!-- Socialiai pažeidžiama grupė. Privaloma -->
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="participantMark"><!-- Kitas požymis -->
+        <xs:sequence>
+          <xs:element name="markNumbering"><!-- Požymio numeris. Privalomas. Gali būti reikšmė nuo 1 iki 3 -->
+              <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:maxInclusive value="3"/>
+                  </xs:restriction>
+              </xs:simpleType>
+          </xs:element>
+          <xs:element name="response"><!-- Dalyvio atsakymas max 500 simbolių. Privalomas -->
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:maxLength value="500"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="participantCriterion"><!-- Papildomas kriterijus -->
+        <xs:sequence>
+          <xs:element name="criterionNumbering"><!-- Kriterijaus numeris. Privalomas. Gali būti reikšmė nuo 1 iki 10-->
+              <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                      <xs:minInclusive value="1"/>
+                      <xs:maxInclusive value="10"/>
+                  </xs:restriction>
+              </xs:simpleType>
+          </xs:element>
+          <xs:element name="fitCriteria" type="xs:boolean"/><!-- Požymis ar atitinka kriterijų. Privalomas -->
+        </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="participantGender"><!-- Lytis -->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WOMAN"/> <!-- Moteris -->
+      <xs:enumeration value="MAN"/> <!-- Vyras -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="particEducation"><!-- Turimas išsilavinimas -->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PE_I1"/><!-- 1 grupė: ikimokyklinio amžiaus vaikas; pradinis išsilavinimas (4 klasės), pagrindinis išsilavinimas (10 klasių) (I1) -->
+      <xs:enumeration value="PE_I2"/><!-- 2 grupė: vidurinis išsilavinimas (12 klasių); profesinė kvalifikacija (I2) -->
+      <xs:enumeration value="PE_I3"/><!-- 3 grupė: aukštasis išsilavinimas (bakalauras, magistras, mokslų daktaras) (I3) -->
+      <xs:enumeration value="PE_I4"/><!-- Suaugęs asmuo neturintis pradinio išsilavinimo (I4). -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="particOccupation"><!-- Statusas darbo rinkoje -->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="POCC_EMP_SELF"/><!-- Dirbantis - Savarankiškai dirbantis (D1) -->
+      <xs:enumeration value="POCC_EMP_OTH"/><!-- Dirbantis - Dirbantis kitais pagrindais (pagal darbo sutartį, valstybės tarnautojai ir pan.) (D2)-->
+      <xs:enumeration value="POCC_UNEMPL_S"/><!-- Bedarbis - Bedarbis (nedirbantis mažiau nei 6 mėn.) (B1) -->
+      <xs:enumeration value="POCC_UNEMPL_M"/><!-- Bedarbis - Bedarbis (nedirbantis nuo 6 iki 12 mėn.) (B2) -->
+      <xs:enumeration value="POCC_UNEMPL_L"/><!-- Bedarbis - Bedarbis (nedirbantis daugiau nei 12 mėn.) (B3) -->
+      <xs:enumeration value="POCC_INACT_STUD"/><!-- Ekonomiškai neaktyvus - Ekonomiškai neaktyvus asmuo, kuris studijuoja ar mokosi (E1) -->
+      <xs:enumeration value="POCC_INACT_OTH"/><!-- Ekonomiškai neaktyvus asmuo, kuris nestudijuoja ar nesimoko (išėjęs į pensiją, nutraukęs verslą, visiškai neįgalus, namų šeimininkai ir pan.) (E2) -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="particEducProgram"><!-- Dalyvavimas švietimo programose -->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PEP_I5"/><!-- Asmuo, kuris šiuo metu studijuoja / dalyvauja neformaliuose mokymuose (I5)  -->
+      <xs:enumeration value="PEP_I6"/><!-- Asmuo, kuris šiuo metu nestudijuoja ir nedalyvauja jokiuose mokymuose (I6) -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="particVulnGroup"><!-- Projekto dalyvio priklausymas socialiai pažeidžiamoms grupėms -->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PVG_G1"/><!-- Visi kartu gyvenantys šeimos nariai yra nedirbantys asmenys (G1) -->
+      <xs:enumeration value="PVG_G2"/><!-- Visi kartu gyvenantys šeimos nariai yra nedirbantys asmenys, šeimoje yra išlaikomų vaikų (G2) -->
+      <xs:enumeration value="PVG_G3"/><!-- Asmuo, priklausantis socialinėms, kultūrinėms, tautinėms ir religinėms mažumoms, migrantas, užsienio kilmės asmuo (G3) -->
+      <xs:enumeration value="PVG_G4"/><!-- Neįgalus asmuo (G4) -->
+      <xs:enumeration value="PVG_G5"/><!-- Asmuo, neturintis nuolatinės gyvenamosios vietos (G5) -->
+      <xs:enumeration value="PVG_G6"/><!-- Vieniši tėvai auginantys nepilnamečius vaikus (G6) -->
+      <xs:enumeration value="PVG_G7"/><!-- Asmuo, priklausantis kitoms socialiai pažeidžiamoms grupėms (G7) -->
+      <xs:enumeration value="PVG_G8"/><!-- Asmuo nepriklausantis nė vienai socialiai pažeidžiamai grupei (G8) -->
+      <xs:enumeration value="PVG_G9"/><!-- Nesutinku teikti šios informacijos (G9) -->
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
