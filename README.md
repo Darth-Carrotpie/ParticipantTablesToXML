@@ -25,4 +25,5 @@ Prieš paleidžiant reikalinga įsitikinti, kad failų struktūra tinkama:
 
 ## LICENCE / LICENCIJA
 [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
-[LICENSE FILE](https://github.com/Darth-Carrotpie/ParticipantTablesToXML/blob/main/LICENSE.md)
+
+[LICENSE FILE](https://github.com/Darth-Carrotpie/ParticipantTablesToXML/blob/main/LICENSE.txt)
