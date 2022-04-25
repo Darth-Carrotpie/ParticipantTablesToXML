@@ -22,3 +22,7 @@ Prieš paleidžiant reikalinga įsitikinti, kad failų struktūra tinkama:
   - išskleistame aplanke sukurkite aplanką "IO", jei jo nėra, pvz. ./Documents/ParticipantTablesToXML/IO/ adresu.
   - sudėti "xlsx" failus naujai sukurtame aplanke "IO". Galite sugrupuoti sub-aplankais pagal patogumą ar poreikį - jie bus nuskaityti iš vidaus.
   - paleidus programą bus sukurtas rezultatas pavadinimu "output.xml" tame pačiame "IO" aplanke.
+
+## LICENCE / LICENCIJA
+[GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
+[LICENSE FILE](https://github.com/Darth-Carrotpie/ParticipantTablesToXML/blob/main/LICENSE.md)
