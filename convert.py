@@ -1,16 +1,20 @@
 import xmlschema
 from pprint import pprint
-from readFiles import ReadFiles
-import pandas
-from writeXML import WriteXMLTree, dict_to_xml
+from readFiles import ReadFiles, TryMakeIO
+from writeXML import WriteXMLTree
 from conversions import fixValueNames, renameCols
 from objects import ParticipantFormObject, Participant
 
+TryMakeIO()
 df = ReadFiles()
+if df is None:
+    print("No input files detected in IO folder")
+    print("'IO' aplanke failų nerasta")
+    exit()
 renameCols(df)
 df = fixValueNames(df)
 
-obj = ParticipantFormObject("10.1.5-ESFA-V-924-01-0004", "2022-02-07", [Participant(df.to_records()[0])])
+obj = ParticipantFormObject("10.1.5-ESFA-V-924-01-0004", "2022-02-07")
 obj.FrameToRecords(df)
 
 xmlObj = obj.toXMLElement()

@@ -27,8 +27,18 @@ def getInputFilePaths():
 def ReadFiles():
     paths = getInputFilePaths()
     dfList = []
+    if len(dfList) ==0:
+        return None
     for p in paths:
         dfList.append(ReadXLSX(p))
     df = pd.concat(dfList, axis=0, ignore_index=False)
 
     return df
+
+def TryMakeIO():
+    curr_path = path.dirname(path.abspath(main.__file__))
+    abs_path = path.join(curr_path, "IO")
+    try:
+        os.mkdir(abs_path)
+    except:
+        pass
