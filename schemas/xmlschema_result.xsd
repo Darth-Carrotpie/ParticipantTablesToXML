@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="EndedParticipantFormObject" type="endedParticformObject"/> <!-- INFORMACIJA APIE PROJEKTO DALYVIUS, BAIGUSIUS DALYVAUTI PROJEKTE  -->
+
+  <xs:complexType name="endedParticformObject">
+    <xs:complexContent>
+      <xs:extension base="abstractParticFormObject">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="abstractParticFormObject">
+    <xs:sequence>
+      <xs:element name="projectCode" type="xs:string"/> <!-- Projekto kodas. Privalomas -->
+      <xs:element name="formDate" type="xs:date"/> <!-- Dalyvių anketinių duomenų pildymo data. Privaloma -->
+      <xs:element name="ParticipantList"> <!--DALYVIŲ SĄRAŠAS. Privalomas -->
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Participant" type="participant" maxOccurs="unbounded"/><!-- Dalyvis. Privalomas -->
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="participant"> <!-- Dalyvio duomenys -->
+        <xs:sequence>
+          <xs:element name="surname" type="xs:string"/> <!-- Dalyvio pavardė max 30 simbolių. Privaloma -->
+          <xs:element name="forename" type="xs:string"/> <!-- Dalyvio vardas max 30 simbolių. Privalomas -->
+          <xs:element name="dateOfBirth" type="xs:date"/> <!-- Dalyvio gimimo data. Privaloma -->
+          <xs:element name="particTill" type="xs:date"/> <!-- Dalyvio dalyvavimo projekto veiklose pabaiga. Privaloma -->
+          <xs:element name="ResultList"> <!-- Informacija apie pasiektus rezultatus. Rezultatų sąrašas. Privalomas -->
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Result" type="particResult" maxOccurs="unbounded"/><!-- Pasiektas rezultatas. Privalomas -->
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="particResult"> <!-- Rezultatas -->
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PR_1"/><!--Ekonomiškai neaktyvus asmuo, kuris baigęs dalyvavimą pradėjo ieškoti darbo (R1) -->
+      <xs:enumeration value="PR_2"/><!--Dalyvis, kuris baigęs dalyvavimą pradėjo dirbti, įskaitant savarankišką darbą (R2)-->
+      <xs:enumeration value="PR_3"/><!--Dalyvis, kuris baigęs dalyvavimą, pradėjo mokytis (R3) -->
+      <xs:enumeration value="PR_4"/><!--Dalyvis, kuris baigęs dalyvavimą įgijo kvalifikaciją (R4) -->
+      <xs:enumeration value="PR_5"/><!--Dalyvis, kuris pabaigė veiklą, finansuojamą pagal JUI (R5) -->
+      <xs:enumeration value="PR_6"/><!--Dalyvis, kuris po dalyvavimo projekto veiklose gavo pasiūlymą dirbti, tęsti mokymąsi, atlikti praktiką, stažuotę (R6) -->
+      <xs:enumeration value="PR_7"/><!--Dalyvis, kuris po dalyvavimo projekto veiklose dirba, tęsia mokymąsi, atlieka praktiką, stažuotę (R7) -->
+      <xs:enumeration value="PR_8"/><!--Neatitinka nei vieno anksčiau pateikto aprašymo grupės (R8) -->
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
