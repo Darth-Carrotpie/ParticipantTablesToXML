@@ -6,7 +6,7 @@ from conversions import fixValueNames, renameCols
 from objects.objects import ParticipantFormObject
 
 TryMakeIO()
-df = ReadFiles()
+df = ReadFiles(headerSize = 20)
 if df is None:
     print("No input files detected in IO folder")
     print("'IO' aplanke failų nerasta")
@@ -26,7 +26,7 @@ xmlFileName = "output.xml"
 xmlPath = WriteXMLTree(xmlFileName, xmlObj)
 print("path saved: "+xmlPath)
 
-p_schema = xmlschema.XMLSchema('xmlschema.xsd')
+p_schema = xmlschema.XMLSchema('schemas/xmlschema.xsd')
 
 print("----------------is_valid: "+str(p_schema.is_valid(xmlPath)))
 pprint(str(p_schema.to_dict(xmlPath))[:300])

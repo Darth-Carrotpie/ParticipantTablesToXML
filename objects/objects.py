@@ -1,5 +1,5 @@
 from datetime import datetime
-from CONSTANTS import particVulnGroup
+from CONSTANTS import colNamesMap, particOccupation, particEducation, particEducProgram, particVulnGroup
 from typing import List
 from xml.etree.ElementTree import Element
 
@@ -24,8 +24,8 @@ class Participant(object):
 
             #LISTS
             self.ParticipantMarkList.append(ParticipantMark(1, row.Kp1))
-            self.ParticipantMarkList.append(ParticipantMark(2, row.Kp2))
-            self.ParticipantMarkList.append(ParticipantMark(3, row.Kp3))
+            #self.ParticipantMarkList.append(ParticipantMark(2, row.Kp2))
+            #self.ParticipantMarkList.append(ParticipantMark(3, row.Kp3))
 
             self.ParticipantCriterionList.append(ParticipantCriterion(1, row.K1))
             self.ParticipantCriterionList.append(ParticipantCriterion(2, row.K2))
@@ -37,7 +37,6 @@ class Participant(object):
             self.ParticipantCriterionList.append(ParticipantCriterion(8, row.K8))
             self.ParticipantCriterionList.append(ParticipantCriterion(9, row.K9))
             self.ParticipantCriterionList.append(ParticipantCriterion(10, row.K10))
-
             if(row.G1 > 0):
                 self.VulnGroupList.append("PVG_G1")
             if(row.G2 > 0):
@@ -56,6 +55,10 @@ class Participant(object):
                 self.VulnGroupList.append("PVG_G8")
             if(row.G9 > 0):
                 self.VulnGroupList.append("PVG_G9")
+            if len(self.VulnGroupList) == 0:
+                print(self.forename +"  "+ self.surname  + " contains no VulnGroupList entries")
+                
+                
         else:
             self.dateFilled = ""
             self.surname = ""
@@ -84,12 +87,18 @@ class Participant(object):
         root.append(AttrToElement("employerName", str(self.employerName)))
         root.append(AttrToElement("employerCode", str(self.employerCode)))
         root.append(AddListXML("ParticipantMarkList", self.ParticipantMarkList))
-        root.append(AddListXML("ParticipantCriterionList", self.ParticipantCriterionList))
+        #root.append(AddListXML("ParticipantCriterionList", self.ParticipantCriterionList))
         root.append(AttrToElement("gender", str(self.gender)))
         root.append(AttrToElement("education", str(self.education)))
         root.append(AttrToElement("occupation", str(self.occupation)))
         root.append(AttrToElement("educProgram", str(self.educProgram)))
         root.append(AddListXMLRaw("VulnGroup","VulnGroupList", self.VulnGroupList))
+        
+        if self.gender not in ["MAN","WOMAN"]: print(self.forename +"  "+ self.surname  + " contains no gender entries")
+        if self.education not in list(particEducation.values()): print(self.forename +"  "+ self.surname  + " contains no education entries")
+        if self.occupation not in list(particOccupation.values()): print(self.forename +"  "+ self.surname  + " contains no occupation entries")
+        if self.educProgram not in list(particEducProgram.values()): print(self.forename +"  "+ self.surname  + " contains no educProgram entries")
+
         return root
 
 class ParticipantMark(object):
@@ -134,6 +143,7 @@ class ParticipantFormObject(object):
 
     def FrameToRecords(self,df):
         partRows = df.to_records()
+        print(partRows[0])
         for partRow in partRows:
             self.ParticipantList.append(Participant(partRow))
 

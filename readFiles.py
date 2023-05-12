@@ -5,8 +5,8 @@ import re
 import pandas as pd
 
 
-def ReadXLSX(filePath):
-    part1 = pd.read_excel(filePath, header=[14], comment='*', dtype=str)#converters={'PDD5': str, 'DD2' : str})
+def ReadXLSX(filePath, headerSize):
+    part1 = pd.read_excel(filePath, header=[headerSize], comment='*', dtype=str)#converters={'PDD5': str, 'DD2' : str})
     cols_to_drop = part1.columns[44:]
     part1 = part1.drop(cols_to_drop, axis=1)
     part1.dropna(how='all',axis=0, inplace=True)
@@ -29,12 +29,12 @@ def getInputFilePaths():
                 outputPaths.append(os.path.join(root, file))
     return outputPaths
 
-def ReadFiles():
+def ReadFiles(headerSize):
     paths = getInputFilePaths()
     dfList = []
     for p in paths:
         print(p)
-        dfList.append(ReadXLSX(p))
+        dfList.append(ReadXLSX(p, headerSize))
     if len(dfList) ==0:
         return None
     df = pd.concat(dfList, axis=0, ignore_index=False)

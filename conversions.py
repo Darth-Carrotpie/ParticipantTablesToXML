@@ -2,9 +2,14 @@ from CONSTANTS import colNamesMap, particOccupation, particEducation, particEduc
 import numpy as np
 
 def fixValueNames(dataframe):
+    df = dataframe.copy()
+    #strip whitespaces
+    for col in df.columns:
+        df[col] = df[col].str.strip()
+
     #replace Woman/Man
-    mapping = {'V':'MAN', 'M':"WOMAN"}
-    df = dataframe.replace({'gender':mapping})
+    mapping = {'V':'MAN', 'M':"WOMAN", 'v':'MAN', 'm':"WOMAN"}
+    df = df.replace({'gender':mapping})
 
     #replace the rest into categories
         #replace text to ints
